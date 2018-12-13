@@ -1,0 +1,99 @@
+APP.COMPONENT.HTML
+
+<div class="container-fluid">
+  <h3>Login Form</h3>
+  <form #userForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+
+    <div class="form-group ">
+      <label>Name</label>
+      <input type="text" required #name="ngModel" class="form-control" name="userName" 
+      [class.is-invalid]="name.invalid && name.touched" [(ngModel)]="userModel.userName" >
+      <small class="text-danger" [class.d-none]="name.valid || name.untouched">Name is required</small>
+    </div>
+
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" required class="form-control" name="password" #name="ngModel"
+      [class.is-invalid]="name.invalid && name.touched" [(ngModel)]="userModel.password" >
+    </div>
+    <button [disabled]="userForm.form.invalid" class="btn btn-primary" type="submit" >Login</button>
+
+  </form>
+</div>
+
+===========================================================================
+index.html
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>LogForm</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>
+
+===============================================================================
+app.component.ts
+
+import { Component } from '@angular/core';
+import { User } from './user';
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+ 
+  userModel = new User('','');
+
+onSubmit(){
+  console.log(this.userModel);
+}
+
+}
+
+=====================================================================================
+user.ts
+
+export class User {
+    constructor(
+        public userName: string,
+        public password: string
+
+    ){}
+}
+
+===================================================================================
+app.module.ts
+
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+
